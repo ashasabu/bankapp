@@ -34,11 +34,31 @@ pswd(event:any){
 
 }
 //template using data binding
-login(a:any,p:any){
-  console.log(a);
+// login(a:any,p:any){
+//   console.log(a);
   
-  var acno=a.value
-  var pswd=p.value
+//   var acno=a.value
+//   var pswd=p.value
+//   let database=this.database
+//   if(acno in database){
+//     if(pswd == database[acno]["password"]){
+//       alert("login sucessful!!!!")
+//     }
+//     else{
+//       alert("invalid password")
+//     }
+
+//   }
+//   else{
+//     alert("user does not exist")
+//   }
+// }
+
+login(){
+ 
+  
+  var acno=this.accno_ini
+  var pswd=this.pswd_ini
   let database=this.database
   if(acno in database){
     if(pswd == database[acno]["password"]){
