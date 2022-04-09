@@ -10,8 +10,8 @@ export class DataService {
     1002:{acno:1002,username:"aneena",password:1002,balance:4000}
   }
   constructor() { }
-  register(uname:any,acno1:any,password:any){
-    var acno=parseInt(acno1)
+  register(uname:any,acno:any,password:any){
+   
    let database=this.database
    if(acno in database){
      //user exist
@@ -28,9 +28,51 @@ export class DataService {
      
      return true
    }
-
+  }
+  //login
+  login(acno:any,pswd:any){
+ 
+  
     
-    
+    let database=this.database
+    if(acno in database){
+       if(pswd == database[acno]["password"]){
+        //already exist
+  return true
+        
+      }
+      else{
+        alert("invalid password")
+        return false
+      }
+  
+    }
+    else{
+      alert("user does not exist")
+      return false
+    }
+  }
 
+
+  //deposit
+
+  deposit(acno:any,pswd:any,amt:any){
+    let amount=parseInt(amt)
+    let database=this.database
+    if(acno in database){
+      if(pswd==database[acno]["password"]){
+        database[acno]["balance"]+=amount
+        return database[acno]["balance"]
+      }
+      else{
+        alert("invalid password")
+        return false
+      }
+
+    }
+    else{
+      alert("user does not exist")
+      return false
+    }
   }
 }

@@ -58,22 +58,34 @@ login(){
  
   
   var acno=this.accno_ini
+  
+  
   var pswd=this.pswd_ini
   let database=this.db.database
-  if(acno in database){
-     if(pswd == database[acno]["password"]){
+  //call login in dataservice
+  const result=this.db.login(acno,pswd)
+  if(result){
+    alert("login sucessful!!!!")
+       this.router.navigateByUrl("dashboard")
+  }
+ 
+
+
+
+  // if(acno in database){
+  //    if(pswd == database[acno]["password"]){
       
 
-      alert("login sucessful!!!!")
-      this.router.navigateByUrl("dashboard")
-    }
-    else{
-      alert("invalid password")
-    }
+  //     alert("login sucessful!!!!")
+  //     this.router.navigateByUrl("dashboard")
+  //   }
+  //   else{
+  //     alert("invalid password")
+  //   }
 
-  }
-  else{
-    alert("user does not exist")
-  }
+  // }
+  // else{
+  //   alert("user does not exist")
+  // }
 }
 }
