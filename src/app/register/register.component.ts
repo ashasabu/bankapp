@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from 'services/data.service';
 import { Router, Routes } from '@angular/router';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -14,7 +14,7 @@ export class RegisterComponent implements OnInit {
   // pswd=""
   //group
   registerForm=this.fb.group({
-    uname:[''],
+    uname:['',[Validators.required,Validators.pattern('[a-zA-Z ]*')]],
     acno:[''],
     pswd:['']
   })
@@ -28,6 +28,7 @@ export class RegisterComponent implements OnInit {
     var acno=this.registerForm.value.acno
     var uname=this.registerForm.value.uname
     var pswd=this.registerForm.value.pswd
+    if(this.registerForm.valid){
     const result=this.db.register(uname,acno,pswd)
     if(result){
       alert("sucessfully registered")
@@ -36,6 +37,10 @@ export class RegisterComponent implements OnInit {
     else{
       alert("Account already exist Please login")
     }
+  }
+  else{
+    alert("Invalid Forms!!!")
+  }
 
 
   }

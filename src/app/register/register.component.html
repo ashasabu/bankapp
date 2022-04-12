@@ -25,6 +25,9 @@
                         <input type="text" name="uname" formControlName="uname" class="form-control"  placeholder="username please" id="login_uname" required>
 
                     </div>
+                    <div *ngIf="this.registerForm.get('uname')?.touched&&this.registerForm.get('uname')?.errors" style="color: red;">
+                        Invalid username
+                    </div>
 
                       <div class="input-group form-group">
                           <div class="input-group-prepend">
