@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router, Routes } from '@angular/router';
 import { DataService } from 'services/data.service';
 
@@ -13,11 +14,13 @@ export class LoginComponent implements OnInit {
 
   aim="Your Perfect Banking Partner"
   accnum="Your account number please!!!"
-  accno_ini=""
-  pswd_ini=""
+ 
+  loginForm=this.fb.group({
+    acno:['',[Validators.required,Validators.pattern('[0-9]*')]],
+    pswd:['',[Validators.required,Validators.pattern('[a-zA-Z0-9]*')]]
+  })
 
-
-  constructor(private router:Router,private db:DataService) { }
+  constructor(private router:Router,private db:DataService,private fb:FormBuilder) { }
  
   ngOnInit(): void {
   }
@@ -57,35 +60,41 @@ export class LoginComponent implements OnInit {
 login(){
  
   
-  var acno=this.accno_ini
+  var acno=this.loginForm.value.acno
   
   
-  var pswd=this.pswd_ini
+  var pswd=this.loginForm.value.pswd
   let database=this.db.database
   //call login in dataservice
-  const result=this.db.login(acno,pswd)
-  if(result){
-    alert("login sucessful!!!!")
-       this.router.navigateByUrl("dashboard")
+  if(this.loginForm.valid){
+    const result=this.db.login(acno,pswd)
+    if(result){
+      alert("login sucessful!!!!")
+         this.router.navigateByUrl("dashboard")
+    }
+   
+  
+  
+  
+    // if(acno in database){
+    //    if(pswd == database[acno]["password"]){
+        
+  
+    //     alert("login sucessful!!!!")
+    //     this.router.navigateByUrl("dashboard")
+    //   }
+    //   else{
+    //     alert("invalid password")
+    //   }
+  
+    // }
+    // else{
+    //   alert("user does not exist")
+    // }
   }
- 
-
-
-
-  // if(acno in database){
-  //    if(pswd == database[acno]["password"]){
-      
-
-  //     alert("login sucessful!!!!")
-  //     this.router.navigateByUrl("dashboard")
-  //   }
-  //   else{
-  //     alert("invalid password")
-  //   }
-
-  // }
-  // else{
-  //   alert("user does not exist")
-  // }
-}
+  else{
+    alert("Invalid Forms")
+  }
+  }
+  
 }
