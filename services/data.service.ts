@@ -4,11 +4,14 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class DataService {
+  currentUser:any
+
   database:any ={
     1000:{acno:1000,username:"meena",password:1000,balance:5000},
     1001:{acno:1001,username:"neena",password:1001,balance:3000},
     1002:{acno:1002,username:"aneena",password:1002,balance:4000}
   }
+
   constructor() { }
   register(uname:any,acno:any,password:any){
    
@@ -38,6 +41,7 @@ export class DataService {
     if(acno in database){
        if(pswd == database[acno]["password"]){
         //already exist
+        this.currentUser=database[acno]["username"]
   return true
         
       }
