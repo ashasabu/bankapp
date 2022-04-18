@@ -4,8 +4,9 @@
     <span class="quote text-light">Giving you freedom...</span>
   </nav>
   <br>
-  <h1 style="color: white;text-align: center;">WELCOME {{user}}</h1>
+  <h1 style="color: white;">WELCOME {{user}}</h1>
   <br>
+  <a routerLink="/transaction">Transaction History</a>
   <div class="container col-md-12 mt-0">
       <div class="d-flex justify-content-center h-100">
           <div class="card">
@@ -33,7 +34,7 @@
                           <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fas fa-key"></i></span>
                           </div>
-                          <input type="password" name="pswd" formControlName="pswd" class="form-control" placeholder="password" id="login_password" required>
+                          <input type="text" name="pswd" formControlName="pswd" class="form-control" placeholder="password" id="login_password" required>
                           <!-- <input type="password" #pswd class="form-control" placeholder="password" id="login_password" required> -->
                           <!-- (change)="pswd($event)" -->
                       </div>
@@ -92,7 +93,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-key"></i></span>
                         </div>
-                        <input type="password" name="pswd" formControlName="pswd" class="form-control" placeholder="password" id="login_password" required>
+                        <input type="text" name="pswd" formControlName="pswd" class="form-control" placeholder="password" id="login_password" required>
                         <!-- <input type="password" #pswd class="form-control" placeholder="password" id="login_password" required> -->
                         <!-- (change)="pswd($event)" -->
                     </div>
