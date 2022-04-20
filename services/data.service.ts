@@ -13,8 +13,36 @@ export class DataService {
     1002:{acno:1002,username:"aneena",password:1002,balance:4000,transaction:[]}
   }
 
-  constructor() { }
-  register(uname:any,acno:any,password:any){
+  constructor() { 
+    this.getDetails()
+  }
+
+//store local storage
+saveDetails(){
+  localStorage.setItem("database",JSON.stringify(this.database))
+  if(this.currentAcno){
+    localStorage.setItem("currentAcno",JSON.stringify(this.currentAcno))
+  }
+  if(this.currentUser){
+    localStorage.setItem("currentUser",JSON.stringify(this.currentUser))
+  }
+}
+getDetails(){
+  if(localStorage.getItem("database")){
+    this.database =JSON.parse(localStorage.getItem("database")||'')
+  }
+  if(localStorage.getItem("currentAcno")){
+    this.currentAcno=JSON.parse(localStorage.getItem("currentAcno")||'')
+  }
+  if(localStorage.getItem("currentUser")){
+    this.currentUser=JSON.parse(localStorage.getItem("currentUser")||'')
+  }
+  
+}
+
+
+
+  register(username:any,acno:any,password:any){
    
    let database=this.database
    if(acno in database){
@@ -24,13 +52,14 @@ export class DataService {
    else{
      database[acno]={
        acno,
-       uname,
+       username,
        password,
        balance:0,
        transaction:[]
      }
     
-     
+     this.saveDetails()
+ 
      return true
    }
   }
@@ -45,6 +74,10 @@ export class DataService {
         //already exist
         this.currentUser=database[acno]["username"]
         this.currentAcno=acno
+        this.saveDetails()
+   
+
+
   return true
         
       }
@@ -76,6 +109,10 @@ export class DataService {
           }
         )
        // console.log(database);
+       this.saveDetails()
+    
+
+
         return database[acno]["balance"]
       }
      
@@ -110,7 +147,12 @@ export class DataService {
             }
           )
        //   console.log(database);
+       this.saveDetails()
+      
+
+
           return database[acno]["balance"]
+
         }
         else{
           alert("insufficient balance")
@@ -132,4 +174,5 @@ export class DataService {
   transaction(acno:any){
     return this.database[acno].transaction
   }
+
 }
