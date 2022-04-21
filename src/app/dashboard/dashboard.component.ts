@@ -23,8 +23,10 @@ user:any
     pswd:['',[Validators.required,Validators.pattern('[a-zA-Z0-9]*')]],
     amount:['',[Validators.required,Validators.pattern('[0-9]*')]]
   })
+  loginDate:any
   constructor(private ds:DataService,private fb:FormBuilder,private router:Router) {
     this.user=this.ds.currentUser
+    this.loginDate=new Date()
    }
 
   ngOnInit(): void {
@@ -33,6 +35,10 @@ user:any
       alert("Please login.....")
       this.router.navigateByUrl("")
     }
+  }
+  acno:any
+  deletefromParent(){
+    this.acno=JSON.parse(localStorage.getItem("currentAcno")||'') 
   }
   deposit(){
     alert("deposit")
@@ -73,5 +79,11 @@ logout(){
   localStorage.removeItem("currentUser")
   localStorage.removeItem("currentAcno")
   this.router.navigateByUrl("")
+}
+onCancel(){
+  this.acno=""
+}
+onDelete(event:any){
+  alert("delete account"+event)
 }
 }

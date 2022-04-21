@@ -5,8 +5,15 @@
   <button class="btn btn-warning" (click)="logout()">Logout</button>
 </nav>
   <br>
+  
   <h1 style="color: white;">WELCOME {{user}}</h1>
-  <br>
+  <!-- display date -->
+  <h4 style="color: white;">Login datails are{{loginDate|date:'fullDate'|uppercase}}</h4>
+  <button (click)="deletefromParent()" class="btn btn-danger" style="float: right;">Delete</button>
+  <br><br>
+  <div class="container">
+  <app-deleteconform (onDelete)="onDelete($event)" (onCancel)="onCancel()" [item]="acno"></app-deleteconform>
+
   <a routerLink="/transaction">Transaction History</a>
   <div class="container col-md-12 mt-0">
       <div class="d-flex justify-content-center h-100">
@@ -64,7 +71,7 @@
       </div>
   </div>
 
-
+</div>
  <!-- withdraw -->
 
  <div class="container col-md-12 mt-0">
