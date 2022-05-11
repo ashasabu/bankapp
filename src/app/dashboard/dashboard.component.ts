@@ -25,16 +25,16 @@ user:any
   })
   loginDate:any
   constructor(private ds:DataService,private fb:FormBuilder,private router:Router) {
-    this.user=this.ds.currentUser
+    this.user=JSON.parse(localStorage.getItem('currentUser')||'')
     this.loginDate=new Date()
    }
 
   ngOnInit(): void {
-    if(!localStorage.getItem("currentAcno")){
+    // if(!localStorage.getItem("currentAcno")){
 
-      alert("Please login.....")
-      this.router.navigateByUrl("")
-    }
+    //   alert("Please login.....")
+    //   this.router.navigateByUrl("")
+    // }
   }
   acno:any
   deletefromParent(){
@@ -46,10 +46,16 @@ user:any
     var pswd=this.depositForm.value.pswd
     var amount=this.depositForm.value.amount
    if(this.depositForm.valid){
-    const result= this.ds.deposit(acno,pswd,amount)
-    if(result){
-      alert(amount+"successfully deposited... And new balance is"+ result)
-    }
+    this.ds.deposit(acno,pswd,amount)
+    .subscribe((result:any)=>{
+      if(result){
+        alert(result.message)
+      }
+    },
+    (result)=>{
+      alert(result.error.message)
+    })
+    
   }
   else{
       alert("Invalid Form")
@@ -63,12 +69,15 @@ user:any
     var pswd=this.withdrawForm.value.pswd
     var amount=this.withdrawForm.value.amount
    if(this.withdrawForm.valid){
-    const result= this.ds.withdraw(acno,pswd,amount)
-    if(result){
-      alert(amount+"successfully debited... And new balance is"+ result)
-
-  }
-  
+     this.ds.withdraw(acno,pswd,amount)
+    .subscribe((result:any)=>{
+      if(result){
+        alert(result.message)
+      }
+    },
+    (result)=>{
+      alert(result.error.message)
+    })
    }
    else{
     alert("Invalid form")
@@ -84,6 +93,16 @@ onCancel(){
   this.acno=""
 }
 onDelete(event:any){
-  alert("delete account"+event)
+  this.ds.onDelete(event)
+  .subscribe((result:any)=>{
+    if(result){
+      alert(result.message)
+      this.router.navigateByUrl("")
+    }
+  },
+  (result:any)=>{
+    alert(result.error.message)
+  })
+ }
 }
-}
+
