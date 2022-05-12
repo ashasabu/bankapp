@@ -18,7 +18,7 @@ export class RegisterComponent implements OnInit {
     acno:['',[Validators.required,Validators.pattern('[0-9]*')]],
     pswd:['',[Validators.required,Validators.pattern('[a-zA-Z0-9]*')]]
   })
-  constructor(private db:DataService,private router:Router,private fb:FormBuilder) { }
+  constructor(private ds:DataService,private router:Router,private fb:FormBuilder) { }
 
   ngOnInit(): void {
   }
@@ -29,15 +29,17 @@ export class RegisterComponent implements OnInit {
     var uname=this.registerForm.value.uname
     var pswd=this.registerForm.value.pswd
     if(this.registerForm.valid){
-    const result=this.db.register(uname,acno,pswd)
-    if(result){
-      alert("sucessfully registered")
-      this.router.navigateByUrl("")
+   this.ds.register(uname,acno,pswd)
+    .subscribe((result:any)=>{
+      if(result){
+        alert(result.message)
+        this.router.navigateByUrl("")
+      }
+    },
+      (result)=>{
+        alert(result.error.message)
+      })
     }
-    else{
-      alert("Account already exist Please login")
-    }
-  }
   else{
     alert("Invalid Forms!!!")
   }

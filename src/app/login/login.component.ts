@@ -67,11 +67,23 @@ login(){
   let database=this.db.database
   //call login in dataservice
   if(this.loginForm.valid){
-    const result=this.db.login(acno,pswd)
-    if(result){
-      alert("login sucessful!!!!")
+    this.db.login(acno,pswd)
+    .subscribe((result:any)=>{
+      if(result){
+        localStorage.setItem('currentAcno',JSON.stringify(result.currentAcno))
+        localStorage.setItem('currentUser',JSON.stringify(result.currentUser))
+        localStorage.setItem("token",JSON.stringify(result.token))
+
+        alert(result.message)
          this.router.navigateByUrl("dashboard")
+      }
+    },
+    (result)=>{
+      alert(result.error.message)
     }
+    )
+   
+    
    
   
   
